@@ -4,7 +4,7 @@
 ### LiteIDE
 * [LiteIDE Source](https://github.com/visualfc/liteide)
 * [LiteIDE Download](http://sourceforge.net/projects/liteide/files)
-* [Support LiteIDE](http://visualfc.github.com/support)
+* [Support LiteIDE](https://visualfc.github.io/support/)
 
 ### LiteIDE Markdown
 * Markdown parser from [sundown](https://github.com/vmg/sundown)
