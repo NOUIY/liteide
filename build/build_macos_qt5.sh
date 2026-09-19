@@ -94,3 +94,7 @@ cp -R -v $LITEIDE_ROOT/bin/gomodifytags liteide/LiteIDE.app/Contents/MacOS
 cp -R -v $LITEIDE_ROOT/bin/gopls liteide/LiteIDE.app/Contents/MacOS
 cp -R -v $LITEIDE_ROOT/deploy/* liteide/LiteIDE.app/Contents/Resources
 cp -R -v $LITEIDE_ROOT/os_deploy/macosx/* liteide/LiteIDE.app/Contents/Resources
+
+# Hardened Runtime is required on Apple Silicon so CoreText/ImageIO can decode
+# Apple Color Emoji (otherwise the editor crashes at 0xbad4007 while painting).
+codesign --force --deep --options runtime --entitlements "$LITEIDE_ROOT/src/liteide/LiteIDE.entitlements" --sign - liteide/LiteIDE.app || exit 1
