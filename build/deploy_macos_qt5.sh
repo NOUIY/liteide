@@ -24,4 +24,6 @@ fi
 
 rm -f liteide/LiteIDE.app/Contents/Resources/qt.conf
 macdeployqt liteide/LiteIDE.app || exit 1
-codesign --force --deep --sign - liteide/LiteIDE.app || exit 1
+# Hardened Runtime is required on Apple Silicon so CoreText/ImageIO can decode
+# Apple Color Emoji (otherwise the editor crashes at 0xbad4007 while painting).
+codesign --force --deep --options runtime --entitlements "$LITEIDE_ROOT/src/liteide/LiteIDE.entitlements" --sign - liteide/LiteIDE.app || exit 1
