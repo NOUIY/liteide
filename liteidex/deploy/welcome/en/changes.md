@@ -3,6 +3,10 @@
 ## LiteIDE X Version
   LiteIDE is a simple, open source, cross-platform Go IDE.
 
+### Unreleased
+* Markdown
+    * replace CommonMark/cmark with cmark-gfm 0.29.0.gfm.13 (tables, strikethrough, task lists, autolinks, footnotes)
+
 ### 2025.5.20 Ver X38.4
 * LiteIDE
 	* support Go1.24
