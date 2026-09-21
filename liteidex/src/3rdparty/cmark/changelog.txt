@@ -1,3 +1,105 @@
+[0.29.0.gfm.13]
+  * Normalized marker row vs. delimiter row nomenclature (#273)
+  * Exposed CMARK_NODE_FOOTNOTE_DEFINITION literal value (#336)
+  * Fix format specifier for printing a size_t (#340)
+
+[0.29.0.gfm.12]
+
+  * Fixed polynomial time complexity issues per
+  https://github.com/github/cmark-gfm/security/advisories/GHSA-w4qg-3vf7-m9x5
+  * Added CodeQL project integration (#337)
+  * Addressed const qualifier discard compiler warnings (#330, #331)
+
+[0.29.0.gfm.11]
+
+  * Improved fixes for polynomial time complexity issues per
+  https://github.com/github/cmark-gfm/security/advisories/GHSA-66g8-4hjf-77xh
+  (#323, #324)
+  * Added fuzzing target for bracketed patterns (#318)
+  * Fixed bug in list numbering introduced in
+  763587e8775350b8cb4a2aa0f4cec3685aa96e8b (#322) which caused list numbers
+  to increment by 2
+  * Fixed strict prototype clang warning (#310)
+  * Fixed regression test (#312)
+  * Added additional output formats to quadratic fuzzer (#327)
+  * Fixed buffer overflow in fuzzing harness (#326)
+  
+  Note: these changes may lead to minor changes in expected output on plaintext 
+  rendering of list items. Notably, blank lines may no longer delineate the start 
+  of a list when rendering to plaintext due to changes in how the tight list status 
+  is calculated.
+  
+[0.29.0.gfm.10]
+
+  * Fixed polynomial time complexity issue per
+  https://github.com/github/cmark-gfm/security/advisories/GHSA-r8vr-c48j-fcc5
+  * Fixed polynomial time complexity issues per
+  https://github.com/github/cmark-gfm/security/advisories/GHSA-66g8-4hjf-77xh
+
+  Note: these changes remove redundant bold tag nesting which may result
+  in existing rendering tests failing, e.g. rendering "____bold____" to html
+  will no longer yield "<p><strong><strong>bold</strong></strong></p>".
+
+[0.29.0.gfm.9]
+
+  * Cleanup: Use of a private header was cleaned up (#248)
+  * Cleanup: Man page was updated (#255)
+  * Cleanup: Warnings for -Wstrict-prototypes were cleaned up (#285)
+  * Cleanup: We avoid header duplication (#289)
+
+  * We now store positioning info for url_match (#201)
+  * We now expose cmark_parent_footnote_def for non-C renderers (#254)
+  * Footnote aria-label text now reference the specific footnote backref, and we include a data-footnote-backref-idx attribute so the label can be internationalized in a downstream filter (#307)
+
+[0.29.0.gfm.8]
+
+  * We restored backwards compatibility by deprecating the `cmark_init_standard_node_flags()` requirement, which is now a noop (#305)
+  * We added a quadratic complexity fuzzing target (#304)
+
+[0.29.0.gfm.7]
+
+  * Fixed a polynomial time complexity issue per
+    https://github.com/github/cmark-gfm/security/advisories/GHSA-r572-jvj2-3m8p
+  * Fixed an issue in which crafted markdown document could trigger an
+    out-of-bounds read in the validate_protocol function per
+    https://github.com/github/cmark-gfm/security/advisories/GHSA-c944-cv5f-hpvr
+  * Fixed a polynomial time complexity issue
+    https://github.com/github/cmark-gfm/security/advisories/GHSA-24f7-9frr-5h2r
+  * Fixed several polynomial time complexity issues per
+    https://github.com/github/cmark-gfm/security/advisories/GHSA-29g3-96g3-jg6c
+  * We removed an unneeded .DS_Store file (#291)
+  * We added a test for domains with underscores and fix roundtrip behavior (#292)
+  * We now use an up-to-date clang-format (#294)
+  * We made a variety of implicit integer trunctions explicit by moving to
+    size_t as our standard size integer type (#302)
+
+[0.29.0.gfm.6]
+  * Fixed polynomial time complexity DoS vulnerability in autolink extension
+  
+[0.29.0.gfm.5]
+  * Added xmpp: and mailto: support to the autolink extension
+
+[0.29.0.gfm.4]
+  * Remove `source` from list of HTML blocks
+
+[0.29.0.gfm.3]
+  * Fixed heap memory corruption vulnerabiliy via integer overflow per https://github.com/github/cmark-gfm/security/advisories/GHSA-mc3g-88wq-6f4x
+
+[0.29.0.gfm.2]
+  * Fixed issues with footnote rendering when used with the autolinker (#121),
+    and when footnotes are adjacent (#139).
+  * We now allow footnotes to be referenced from inside a footnote definition,
+    we use the footnote label for the fnref href text when rendering html, and
+    we insert multiple backrefs when a footnote has been referenced multiple
+    times (#229, #230)
+  * We added new data- attributes to footnote html rendering to make them
+    easier to style (#234)
+
+[0.29.0.gfm.1]
+
+  * Fixed denial of service bug in GFM's table extension
+    per https://github.com/github/cmark-gfm/security/advisories/GHSA-7gc6-9qr5-hc85
+
 [0.29.0]
 
   * Update spec to 0.29.
@@ -122,6 +224,61 @@
   * Update the Racket wrapper (Eli Barzilay).
   * Makefile: For afl target, don't build tests.
 
+[0.28.3.gfm.20]
+
+  * Add tasklist extension implementation (Watson1978, #94).
+
+[0.28.3.gfm.19]
+
+  * Prevent out-of-bound memory access in strikethrough matcher (Xavier Décoret, #124).
+  * Limit recursion in autolink extension (Xavier Décoret, #125).
+  * Add plaintext rendering for footnotes (Xavier Décoret, #126).
+
+[0.28.3.gfm.18]
+
+  * Match strikethrough more strictly (#120).
+  * Default to safe operation (#123).
+
+[0.28.3.gfm.17]
+
+  * Allow extension to provide opaque allocation function (Nicolás Ojeda
+    Bär, #89).
+  * Upstream optimisations and fixes.
+  * Extensions can add custom XML attributes (#116).
+  * Support for GFM extensions in cmark XML to CommonMark XSLT converter
+    (Maëlle Salmon, #117).
+
+[0.28.3.gfm.16]
+
+  * Do not percent-encode tildes (~) in HTML attribute values (#110).
+  * Fix footnote references in tables (#112).
+
+[0.28.3.gfm.15]
+
+  * Escape non-strikethrough tildes (~) in commonmark output (John MacFarlane, #106).
+  * Cosmetic fix to table HTML output (John MacFarlane, #105).
+  * Use two tildes for strikethrough CommonMark output (John MacFarlane, #104).
+  * Normalised header and define names (#109).
+
+[0.28.3.gfm.14]
+
+  * Added a plaintext renderer for strikethrough nodes.
+
+[0.28.3.gfm.13]
+
+  * Footnote rendering bugfix (Michael Camilleri, #90).
+  * Debian packaging (Joachim Nilsson, #97).
+  * Add CMARK_OPT_STRIKETHROUGH_DOUBLE_TILDE for redcarpet compatibility.
+  * Add CMARK_OPT_TABLE_PREFER_STYLE_ATTRIBUTES (FUJI Goro, #86, #87).
+  * Fix pathological nested list parsing (Phil Turnbull, #95).
+  * Expose more of the extension APIs (Minghao Liu, #96).
+  * Add python example which uses extensions (Greg Stein, #102).
+  * Add CMARK_OPT_FULL_INFO_STRING (Mike Kavouras, #103).
+
+[0.28.3.gfm.12]
+
+  * Various security and bug fixes.
+
 [0.28.3]
 
   * Include GNUInstallDirs in src/CMakeLists.txt (Nick Wellnhofer, #240).
@@ -144,6 +301,40 @@
     install destination and in the libcmark.pc.in template.
   * Update README.md, replace `make astyle` with `make format`
     (Nguyễn Thái Ngọc Duy).
+
+[0.28.0.gfm.11]
+
+  * Do not output empty `<tbody>` in table extension.
+
+[0.28.0.gfm.10]
+
+  * Fix denial of service parsing references.
+
+[0.28.0.gfm.9]
+
+  * Fix denial of service parsing nested links (#49).
+
+[0.28.0.gfm.8]
+
+  * Fix bug where autolink would cause `:` to be skipped in emphasis
+    processing.
+
+[0.28.0.gfm.7]
+
+  * Strikethrough characters do not disturb regular emphasis processing.
+
+[0.28.0.gfm.6]
+
+  * Fix inline sourcepos info when inlines span multiple lines, and in
+    ATX headings.
+
+[0.28.0.gfm.5]
+
+  * Latest spec.
+  * Fix a typo in the spec (John Gardner).
+  * Fix quadratic behavior in reference lookups.
+  * Add `core_extensions_ensure_registered`.
+  * Add sourcepos information for inlines.
 
 [0.28.0]
 
@@ -270,6 +461,34 @@
   * README: Add link to Python wrapper, prettify languages list
     (Pavlo Kapyshin).
   * README: Add link to cmark-scala (Tim Nieradzik, #196)
+
+[0.27.1.gfm.4]
+
+  * Fix regression with nested parentheses in link targets (#48).
+
+[0.27.1.gfm.3]
+
+  * Various undefined behavior issues fixed (#38, #39, #40).
+  * Tag filter is case-insensitive (#43).
+
+[0.27.1.gfm.2]
+
+  * Fix a number of bugs (reading past end of buffer, undefined behavior.
+  * Add `cmark_syntax_extension_get_private()`. (Jonathan Müller)
+
+[0.27.1.gfm.1]
+
+  * Add plaintext renderer.
+  * Remove normalize option; we now always normalize the AST.
+  * Add getters for table alignment.
+  * `make install` also installs the extensions static/shared library.
+
+[0.27.1.gfm.0]
+
+  * Add extensions: tagfilter, strikethrough, table, autolink.
+  * Add arena memory implementation.
+  * Add CMARK_OPT_GITHUB_PRE_LANG for fenced code blocks.
+  * Skip UTF-8 BOM on input.
 
 [0.27.1]
 

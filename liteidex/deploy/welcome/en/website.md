@@ -7,7 +7,7 @@
 * [Support LiteIDE](https://visualfc.github.io/support/)
 
 ### LiteIDE Markdown
-* Markdown parser from [sundown](https://github.com/vmg/sundown)
+* Markdown parser from [cmark-gfm](https://github.com/github/cmark-gfm)
 * Markdown CSS files from [Mou](http://mouapp.com)
 
 ### Golang
